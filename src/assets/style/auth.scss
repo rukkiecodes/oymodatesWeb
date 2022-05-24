@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@500&display=swap');
+
+.logo {
+  font-family: 'Pacifico', cursive !important;
+}
+
+.head {
+  * {
+    font-family: 'Montserrat Alternates', sans-serif !important;
+  }
+
+  height: calc(100vh - 64px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
