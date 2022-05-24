@@ -32,6 +32,7 @@ export const useSigninStore = defineStore({
 
           VueCookies.set('oymoUser', JSON.stringify(user))
           console.log('oymoUser: ', VueCookies.get('oymoUser'))
+          this.dialog = false
         }).catch(error => {
           const errorCode = error.code
           const errorMessage = error.message
@@ -49,6 +50,7 @@ export const useSigninStore = defineStore({
 
           VueCookies.set('oymoUser', JSON.stringify(user))
           console.log('oymoUser: ', VueCookies.get('oymoUser'))
+          this.dialog = false
         })
         .catch(error => {
           const errorCode = error.code
