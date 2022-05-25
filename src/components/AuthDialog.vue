@@ -1,17 +1,17 @@
 <script setup>
 import { XIcon } from '@heroicons/vue/outline'
-import { useSigninStore } from '../stores/signin';
+import { useSigninStore } from '../stores/auth';
 
-const signin = useSigninStore()
+const auth = useSigninStore()
 </script>
 
 <template>
-  <v-dialog v-model="signin.dialog">
+  <v-dialog v-model="auth.dialog">
     <v-card min-width="400" max-width="400" rounded="xl">
       <v-card-header>
         <v-card-title class="logo text-h5 text-center">Oymodates</v-card-title>
         <v-spacer />
-        <v-btn @click="signin.openDialog" elevation="0" icon>
+        <v-btn @click="auth.openDialog" elevation="0" icon>
           <XIcon style="width: 25px" />
         </v-btn>
       </v-card-header>
@@ -26,7 +26,7 @@ const signin = useSigninStore()
       </v-card-text>
 
       <v-card-actions class="mt-4">
-        <v-btn @click="signin.googleLogin" size="large" style="position: relative" block color="grey lighten-1" variant="outlined" rounded="xl">
+        <v-btn @click="auth.googleLogin" size="large" style="position: relative" block color="grey lighten-1" variant="outlined" rounded="xl">
           <img style="position: absolute; left: 10px;" class="mr-5" width="25" src="../assets/img/google.png"
             alt="John" />
           <span style="color:rgba(0,0,0,0.8)">signin wigh google</span>
@@ -34,7 +34,7 @@ const signin = useSigninStore()
       </v-card-actions>
 
       <v-card-actions>
-        <v-btn @click="signin.facebookLogin" size="large" style="position: relative" block color="grey lighten-1" variant="outlined" rounded="xl">
+        <v-btn @click="auth.facebookLogin" size="large" style="position: relative" block color="grey lighten-1" variant="outlined" rounded="xl">
           <img style="position: absolute; left: 10px;" class="mr-5" width="25" src="../assets/img/facebook.png"
             alt="John" />
           <span style="color:rgba(0,0,0,0.8)">signin wigh facebook</span>

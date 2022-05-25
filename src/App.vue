@@ -1,18 +1,21 @@
 <template>
   <v-app>
+    <AppBar />
+    <AppDrawer />
+    <ChatDrawer />
     <v-main>
-      <router-view/>
+      <router-view />
     </v-main>
   </v-app>
 </template>
 
-<script>
-
-export default {
-  name: 'App',
-
-  data: () => ({
-    //
-  }),
-}
+<script setup>
+import AppBar from './components/AppBar.vue'
+import AppDrawer from './components/AppDrawer.vue'
+import ChatDrawer from './components/ChatDrawer.vue'
 </script>
+
+<style>
+@import url(./assets/base.css);
+@import url(./assets/icon/css/line-awesome.min.css);
+</style>

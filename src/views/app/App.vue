@@ -1,15 +1,7 @@
-<template>
-  <v-container>
-    App
-  </v-container>
-</template>
-
-<script>
-export default {
-
-}
+<script setup>
+import Posts from '../../components/Posts.vue'
 </script>
 
-<style>
-
-</style>
+<template>
+  <Posts />
+</template>
