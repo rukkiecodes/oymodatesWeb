@@ -5,17 +5,19 @@ import { getAuth, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider, onA
 const googleProvider = new GoogleAuthProvider()
 const facebookProvider = new FacebookAuthProvider()
 
-import { auth } from '../service/firebase'
+import { auth, db } from '../service/firebase'
 
 import VueCookies from 'vue-cookies'
 
 import router from '../router'
+import { doc, onSnapshot } from 'firebase/firestore'
 
 export const useSigninStore = defineStore({
   id: 'auth',
   state: () => ({
     dialog: false,
     user: null,
+    userProfile: null,
     facebookLoading: false,
     googleLoading: false
   }),
@@ -37,6 +39,7 @@ export const useSigninStore = defineStore({
           console.log('oymoUser: ', VueCookies.get('oymoUser'))
           this.googleLoading = false
           this.dialog = false
+          this.userSetup()
         }).catch(error => {
           this.googleLoading = false
           const errorCode = error.code
@@ -58,6 +61,7 @@ export const useSigninStore = defineStore({
           console.log('oymoUser: ', VueCookies.get('oymoUser'))
           this.facebookLoading = false
           this.dialog = false
+          this.userSetup()
         })
         .catch(error => {
           this.dialog = false
@@ -79,6 +83,17 @@ export const useSigninStore = defineStore({
 
     signoutUser () {
       signOut(auth)
+      router.push('/')
+    },
+
+    async userSetup () {
+      const user = await VueCookies.get('oymoUser')
+
+      const unsub = onSnapshot(doc(db, 'users', user.uid),
+        snapshot => {
+          if (!snapshot.exists()) router.push(this.userProfile ? `/@${this.userProfile?.username}` : `/@${user?.displayName}`)
+        })
+      return unsub
     }
   }
 })

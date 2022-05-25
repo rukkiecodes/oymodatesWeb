@@ -12,7 +12,7 @@ const auth = useSigninStore()
         <v-card-title class="logo text-h5 text-center">Oymodates</v-card-title>
         <v-spacer />
         <v-btn @click="auth.openDialog" elevation="0" icon>
-          <XIcon style="width: 25px" />
+          <XIcon style="width: 24px" />
         </v-btn>
       </v-card-header>
 
