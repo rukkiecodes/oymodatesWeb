@@ -35,7 +35,7 @@
           <v-list-item-title class="text-body-2">{{ item.title }}</v-list-item-title>
         </v-list-item>
 
-        <v-list-item density="compact">
+        <v-list-item @click="auth.signoutUser" density="compact">
           <v-icon icon="mdi-logout mdi-flip-h" class="mr-4" />
           <v-list-item-title class="text-body-2">Log out</v-list-item-title>
         </v-list-item>

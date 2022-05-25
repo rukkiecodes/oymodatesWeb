@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 
-import { getAuth, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider, onAuthStateChanged } from "firebase/auth"
+import { getAuth, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider, onAuthStateChanged, signOut } from "firebase/auth"
 
 const googleProvider = new GoogleAuthProvider()
 const facebookProvider = new FacebookAuthProvider()
@@ -75,6 +75,10 @@ export const useSigninStore = defineStore({
           VueCookies.set('oymoUser', JSON.stringify(user))
         } else this.user = null
       })
+    },
+
+    signoutUser () {
+      signOut(auth)
     }
   }
 })
