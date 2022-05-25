@@ -7,17 +7,22 @@
       prepend-inner-icon="mdi-magnify" />
     <v-spacer />
 
-    <v-btn class="text-capitalize mr-4" icon rounded="lg" size="x-small">
+    <v-btn v-if="auth.user" class="text-capitalize mr-4" icon rounded="lg" size="x-small">
       <v-icon>mdi-plus-box-outline</v-icon>
     </v-btn>
-    <v-btn class="text-capitalize mr-4" icon rounded="lg" size="x-small">
+    <v-btn v-if="auth.user" class="text-capitalize mr-4" icon rounded="lg" size="x-small">
       <v-icon>mdi-telegram</v-icon>
     </v-btn>
-    <v-btn class="text-capitalize mr-4" icon rounded="lg" size="x-small">
+    <v-btn v-if="auth.user" class="text-capitalize mr-4" icon rounded="lg" size="x-small">
       <v-icon>mdi-heart-outline</v-icon>
     </v-btn>
 
-    <v-menu open-on-hover anchor="start" transition="scale-transition">
+    <v-btn v-if="!auth.user" @click="auth.openDialog" v-bind="props" class="text-capitalize red-bg" rounded="lg">
+      <span class="text-white">
+        Log in
+      </span>
+    </v-btn>
+    <v-menu v-else open-on-hover anchor="start" transition="scale-transition">
       <template v-slot:activator="{ props }">
         <v-avatar v-bind="props" class="ml-md-4" size="small">
           <v-img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John"></v-img>
@@ -40,8 +45,17 @@
 </template>
 
 <script setup>
+import { useSigninStore } from '../stores/auth'
+const auth = useSigninStore()
+
+auth.signinUser()
+
 const items = [
   { icon: 'mdi-account-outline', title: 'View profile', to: '/account' },
   { icon: 'mdi-cog-outline', title: 'Settings', to: '/settings' }
 ]
 </script>
+
+<style>
+@import url(../assets/base.css);
+</style>

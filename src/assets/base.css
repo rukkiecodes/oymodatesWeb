@@ -104,3 +104,7 @@ body {
 .text {
   font-family: 'Montserrat Alternates', sans-serif !important;
 }
+
+.red-bg {
+  background-color: #ff4040;
+}

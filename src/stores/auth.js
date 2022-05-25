@@ -15,7 +15,9 @@ export const useSigninStore = defineStore({
   id: 'auth',
   state: () => ({
     dialog: false,
-    user: null
+    user: null,
+    facebookLoading: false,
+    googleLoading: false
   }),
 
   actions: {
@@ -24,6 +26,7 @@ export const useSigninStore = defineStore({
     },
 
     googleLogin () {
+      this.googleLoading = true
       signInWithPopup(auth, googleProvider)
         .then(result => {
           const credential = GoogleAuthProvider.credentialFromResult(result)
@@ -32,8 +35,10 @@ export const useSigninStore = defineStore({
 
           VueCookies.set('oymoUser', JSON.stringify(user))
           console.log('oymoUser: ', VueCookies.get('oymoUser'))
+          this.googleLoading = false
           this.dialog = false
         }).catch(error => {
+          this.googleLoading = false
           const errorCode = error.code
           const errorMessage = error.message
           const email = error.customData.email
@@ -42,6 +47,7 @@ export const useSigninStore = defineStore({
     },
 
     facebookLogin () {
+      this.facebookLoading = true
       signInWithPopup(auth, facebookProvider)
         .then(result => {
           const user = result.user
@@ -50,9 +56,11 @@ export const useSigninStore = defineStore({
 
           VueCookies.set('oymoUser', JSON.stringify(user))
           console.log('oymoUser: ', VueCookies.get('oymoUser'))
+          this.facebookLoading = false
           this.dialog = false
         })
         .catch(error => {
+          this.dialog = false
           const errorCode = error.code
           const errorMessage = error.message
           const email = error.customData.email
@@ -60,12 +68,11 @@ export const useSigninStore = defineStore({
         })
     },
 
-    loginUser () {
+    signinUser () {
       onAuthStateChanged(auth, (user) => {
         if (user) {
           this.user = user
           VueCookies.set('oymoUser', JSON.stringify(user))
-          router.push('/app')
         } else this.user = null
       })
     }
