@@ -16,7 +16,6 @@ import { deleteObject, getDownloadURL, getStorage, ref, uploadBytesResumable } f
 export const useSigninStore = defineStore({
   id: 'auth',
   state: () => ({
-    dialog: false,
     user: null,
     userProfile: null,
     facebookLoading: false,
@@ -36,10 +35,6 @@ export const useSigninStore = defineStore({
   }),
 
   actions: {
-    openDialog () {
-      this.dialog = !this.dialog
-    },
-
     googleLogin () {
       this.googleLoading = true
       signInWithPopup(auth, googleProvider)
@@ -51,7 +46,6 @@ export const useSigninStore = defineStore({
           VueCookies.set('oymoUser', JSON.stringify(user))
           console.log('oymoUser: ', VueCookies.get('oymoUser'))
           this.googleLoading = false
-          this.dialog = false
           this.userSetup()
         }).catch(error => {
           this.googleLoading = false
@@ -73,11 +67,9 @@ export const useSigninStore = defineStore({
           VueCookies.set('oymoUser', JSON.stringify(user))
           console.log('oymoUser: ', VueCookies.get('oymoUser'))
           this.facebookLoading = false
-          this.dialog = false
           this.userSetup()
         })
         .catch(error => {
-          this.dialog = false
           const errorCode = error.code
           const errorMessage = error.message
           const email = error.customData.email

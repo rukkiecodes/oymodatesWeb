@@ -97,7 +97,7 @@ body {
   background: #555;
 }
 
-.logo {
+.logo, #logo {
   font-family: 'Pacifico', cursive !important;
 }
 
