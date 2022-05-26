@@ -3,6 +3,8 @@ import { PencilAltIcon, XIcon } from '@heroicons/vue/outline'
 import { useSigninStore } from '../stores/auth'
 
 const auth = useSigninStore()
+
+auth.getUsernames()
 </script>
 
 <template>
@@ -31,40 +33,48 @@ const auth = useSigninStore()
                   :src="auth.userProfile?.photoURL ? auth.userProfile?.photoURL : auth.user?.photoURL" />
 
                 <v-btn v-if="auth.userProfile?.username" @click="auth.updateProfilePicture" icon elevation="0"
-                  size="x-small" style="position: absolute; bottom: 8px; right: 6px;" color="grey-lighten-2">
+                  size="x-small" style="position: absolute; bottom: 8px; right: 6px;" color="grey-lighten-3">
                   <PencilAltIcon style="width: 16px;" />
                 </v-btn>
               </v-card-avatar>
             </v-progress-circular>
           </v-card-text>
           <v-card-text>
-            <v-text-field v-model="auth.userProfileCredential.username" class="bg-grey-lighten-4 rounded-lg px-4 mb-5"
-              variant="plain" density="compact" placeholder="Username" hide-details />
-            <span class="text-grey-darken-2" style="font-size: 12px;">www.oymodates.com/@{{ auth.userProfile?.username ?
-                auth.userProfile?.username : auth.user?.displayName
-            }}</span>
-            <br />
-            <span class="text-grey-darken-2" style="font-size: 12px;">
+            <v-text-field v-model="auth.userProfileCredential.username" @keypress.enter="auth.updateProfile"
+              class="bg-grey-lighten-4 rounded-lg px-4" variant="plain" density="compact" placeholder="Username"
+              hide-details />
+            <p v-if="auth.usernames.includes(auth.userProfileCredential.username) && auth.userProfile.username != auth.userProfileCredential.username"
+              class="text-caption text-red">Sorry this username is taken</p>
+            <p class="text-grey-darken-2 mt-5 mb-0 pb-0 text-caption">www.oymodates.com/@{{
+                auth.userProfile?.username ?
+                  auth.userProfile?.username : auth.user?.displayName
+            }}</p>
+            <span class="text-grey-darken-2 text-caption">
               Usernames can only contain letters, numbers, underscores, and periods. Changing your username will also
               change
               your profile link.
             </span>
           </v-card-text>
           <v-card-text>
-            <v-text-field v-model="auth.userProfileCredential.job" class="bg-grey-lighten-4 rounded-lg px-4"
-              variant="plain" density="compact" placeholder="Job" hide-details />
+            <v-text-field v-model="auth.userProfileCredential.job" @keypress.enter="auth.updateProfile"
+              class="bg-grey-lighten-4 rounded-lg px-4" variant="plain" density="compact" placeholder="Job"
+              hide-details />
             <v-divider class="my-5" />
-            <v-text-field v-model="auth.userProfileCredential.company" class="bg-grey-lighten-4 rounded-lg px-4"
-              variant="plain" density="compact" placeholder="Company" hide-details />
+            <v-text-field v-model="auth.userProfileCredential.company" @keypress.enter="auth.updateProfile"
+              class="bg-grey-lighten-4 rounded-lg px-4" variant="plain" density="compact" placeholder="Company"
+              hide-details />
             <v-divider class="my-5" />
-            <v-text-field v-model="auth.userProfileCredential.school" class="bg-grey-lighten-4 rounded-lg px-4"
-              variant="plain" density="compact" placeholder="School" hide-details />
+            <v-text-field v-model="auth.userProfileCredential.school" @keypress.enter="auth.updateProfile"
+              class="bg-grey-lighten-4 rounded-lg px-4" variant="plain" density="compact" placeholder="School"
+              hide-details />
             <v-divider class="my-5" />
-            <v-text-field v-model="auth.userProfileCredential.city" class="bg-grey-lighten-4 rounded-lg px-4"
-              variant="plain" density="compact" placeholder="City" hide-details />
+            <v-text-field v-model="auth.userProfileCredential.city" @keypress.enter="auth.updateProfile"
+              class="bg-grey-lighten-4 rounded-lg px-4" variant="plain" density="compact" placeholder="City"
+              hide-details />
             <v-divider class="my-5" />
-            <v-text-field v-model="auth.userProfileCredential.gender" class="bg-grey-lighten-4 rounded-lg px-4"
-              variant="plain" density="compact" placeholder="Gender" hide-details />
+            <v-text-field v-model="auth.userProfileCredential.gender" @keypress.enter="auth.updateProfile"
+              class="bg-grey-lighten-4 rounded-lg px-4" variant="plain" density="compact" placeholder="Gender"
+              hide-details />
           </v-card-text>
         </v-card>
       </v-card-text>

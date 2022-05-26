@@ -10,12 +10,13 @@ import { auth, db } from '../service/firebase'
 import VueCookies from 'vue-cookies'
 
 import router from '../router'
-import { doc, getDoc, onSnapshot, serverTimestamp, setDoc, updateDoc } from 'firebase/firestore'
+import { collection, doc, getDoc, onSnapshot, serverTimestamp, setDoc, updateDoc } from 'firebase/firestore'
 import { deleteObject, getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage"
 
 export const useSigninStore = defineStore({
   id: 'auth',
   state: () => ({
+    auth: false,
     user: null,
     userProfile: null,
     facebookLoading: false,
@@ -31,7 +32,8 @@ export const useSigninStore = defineStore({
       location: null
     },
     updateProfileLoading: false,
-    pictureUploadProgress: 0
+    pictureUploadProgress: 0,
+    usernames: []
   }),
 
   actions: {
@@ -78,7 +80,7 @@ export const useSigninStore = defineStore({
     },
 
     signinUser () {
-      onAuthStateChanged(auth, (user) => {
+      onAuthStateChanged(auth, user => {
         if (user) {
           this.user = user
           VueCookies.set('oymoUser', JSON.stringify(user))
@@ -114,19 +116,33 @@ export const useSigninStore = defineStore({
       if (navigator.geolocation)
         navigator.geolocation.getCurrentPosition(position => this.userProfileCredential.location = JSON.stringify(position))
 
-      if (this.userProfile.id)
-        updateDoc(doc(db, 'users', user.uid), {
-          job: this.userProfileCredential.job,
-          company: this.userProfileCredential.company,
-          username: this.userProfileCredential.username,
-          school: this.userProfileCredential.school,
-          location: this.userProfileCredential.location,
-          city: this.userProfileCredential.city,
-          gender: this.userProfileCredential.gender,
-        }).then(() => {
-          if (this.userProfileCredential.username != this.userProfile.username)
-            router.push(`/@${this.userProfileCredential?.username}`)
-        }).finally(() => this.getUserProfile())
+      if (this.userProfile?.id || this.userProfile != null) {
+        if (this.usernames.includes(this.userProfileCredential.username))
+          updateDoc(doc(db, 'users', user.uid), {
+            job: this.userProfileCredential.job,
+            company: this.userProfileCredential.company,
+            school: this.userProfileCredential.school,
+            location: this.userProfileCredential.location,
+            city: this.userProfileCredential.city,
+            gender: this.userProfileCredential.gender,
+          }).finally(() => this.getUserProfile())
+        else
+          updateDoc(doc(db, 'users', user.uid), {
+            job: this.userProfileCredential.job,
+            company: this.userProfileCredential.company,
+            username: this.userProfileCredential.username,
+            school: this.userProfileCredential.school,
+            location: this.userProfileCredential.location,
+            city: this.userProfileCredential.city,
+            gender: this.userProfileCredential.gender,
+          }).then(() => {
+            if (this.userProfileCredential.username != this.userProfile.username)
+              router.push(`/@${this.userProfileCredential?.username}`)
+          }).finally(() => {
+            this.getUsernames()
+            this.getUserProfile()
+          })
+      }
       else
         setDoc(doc(db, 'users', user.uid), {
           id: user.uid,
@@ -141,6 +157,12 @@ export const useSigninStore = defineStore({
           timestamp: serverTimestamp()
         }).then(() => router.push(`/@${this.userProfileCredential?.username}`))
           .finally(() => this.getUserProfile())
+    },
+
+    async getUsernames () {
+      const unsub = onSnapshot(collection(db, 'users'),
+        querySnapshot => querySnapshot.forEach(doc => this.usernames.push(doc?.data()?.username)))
+      return unsub
     },
 
     async updateProfilePicture () {
@@ -175,13 +197,19 @@ export const useSigninStore = defineStore({
                   updateDoc(doc(db, 'users', user.uid), {
                     photoURL: downloadURL,
                     avatarLink: uploadTask.snapshot.ref._location.path
-                  }).finally(() => this.getUserProfile())
+                  }).finally(() => {
+                    this.getUserProfile()
+                    this.pictureUploadProgress = 0
+                  })
                 else
                   deleteObject(desertRef).then(() => {
                     updateDoc(doc(db, 'users', user.uid), {
                       photoURL: downloadURL,
                       avatarLink: uploadTask.snapshot.ref._location.path
-                    }).finally(() => this.getUserProfile())
+                    }).finally(() => {
+                      this.getUserProfile()
+                      this.pictureUploadProgress = 0
+                    })
                   })
               })
           })
@@ -195,7 +223,8 @@ export const useSigninStore = defineStore({
       if (profile) {
         this.userProfile = { ...profile }
         this.userProfileCredential = { ...profile }
-      }
+        this.auth = true
+      } else this.auth = true
     }
   }
 })
