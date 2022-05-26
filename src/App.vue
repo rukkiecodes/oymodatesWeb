@@ -13,6 +13,12 @@
 import AppBar from './components/AppBar.vue'
 import AppDrawer from './components/AppDrawer.vue'
 import ChatDrawer from './components/ChatDrawer.vue'
+import { useSigninStore } from './stores/auth'
+
+const auth = useSigninStore()
+auth.userSetup()
+auth.signinUser()
+auth.getUserProfile()
 </script>
 
 <style>

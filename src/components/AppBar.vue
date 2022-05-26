@@ -2,9 +2,6 @@
 import { useSigninStore } from '../stores/auth'
 import { HeartIcon, PlusCircleIcon, UserIcon, CogIcon, LogoutIcon } from '@heroicons/vue/outline'
 const auth = useSigninStore()
-
-auth.signinUser()
-auth.userSetup()
 </script>
 
 <template>
@@ -12,7 +9,7 @@ auth.userSetup()
     <span class="logo mr-md-10 mt-n2 text-h5">Oymodates</span>
 
     <v-spacer />
-    <v-text-field hide-details density="compact" variant="underlined" clearable label="Search videos"
+    <v-text-field hide-details density="compact" variant="plain" clearable placeholder="Search videos" class="bg-grey-lighten-4 px-3 rounded-lg"
       prepend-inner-icon="mdi-magnify" />
     <v-spacer />
 
@@ -34,13 +31,13 @@ auth.userSetup()
     <v-menu v-else open-on-hover anchor="start" transition="scale-transition">
       <template v-slot:activator="{ props }">
         <v-avatar v-bind="props" class="ml-md-4" size="small">
-          <v-img :src="auth.userProfile ? auth.userProfile.photoURL : auth.user?.photoURL" />
+          <v-img :src="auth.userProfile?.photoURL ? auth.userProfile.photoURL : auth.user?.photoURL" />
         </v-avatar>
       </template>
 
       <v-list min-width="200" density="compact">
         <v-list-item density="compact"
-          :to="auth.userProfile ? `/@${auth.userProfile?.username}` : `/@${auth.user?.displayName}`">
+          :to="auth.userProfile?.username ? `/@${auth.userProfile?.username}` : `/@${auth.user?.displayName}`">
           <UserIcon style="width: 22px;" class="mr-3" />
           <v-list-item-title class="text-body-2">View profile</v-list-item-title>
         </v-list-item>

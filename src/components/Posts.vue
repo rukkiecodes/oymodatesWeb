@@ -1,3 +1,8 @@
+<script setup>
+const height = 500
+const vidHeight = height + 'px'
+</script>
+
 <template>
   <v-container>
     <v-card flat>
@@ -20,9 +25,10 @@
               </v-list-item-header>
             </v-list-item>
 
-            <v-card class="d-flex justify-start align-end" flat>
-              <video style="border-radius: 12px; min-width: 200px; width: 50%;"
-                src="https://v16-webapp.tiktok.com/be9d1ebc4e9de6a41666ef63de7427b1/628df725/video/tos/maliva/tos-maliva-ve-0068c799-us/0f9740522a1c45f092da7b8eb42a0ef3/?a=1988&ch=0&cr=0&dr=0&lr=tiktok_m&cd=0%7C0%7C1%7C0&cv=1&br=1948&bt=974&cs=0&ds=3&ft=eXd.6HF2Myq8ZDuSTwe2NRzJyl7Gb&mime_type=video_mp4&qs=0&rc=OTk3aGk4M2U2Z2kzPDtmNEBpM3M4PDw6Zjw2PDMzZzczNEA2YWFfMGItXi0xXzU0Ml5iYSMxNWAvcjRvamJgLS1kMS9zcw%3D%3D&l=2022052503282201022308014927056358" />
+            <v-card class="d-flex justify-start align-end video-container" :max-height="height" flat>
+              <video class="reels-video"
+                style="border-radius: 12px; width: auto !important; height:  vidHeight !important;"
+                src="https://v16-webapp.tiktok.com/705b275f623b1b5716c1d1213402dedd/628edd70/video/tos/useast2a/tos-useast2a-ve-0068c004/7c01c5063f7246a1ab8f99719b4fa9a9/?a=1988&ch=0&cr=0&dr=0&lr=tiktok_m&cd=0%7C0%7C0%7C0&br=1980&bt=990&cs=0&ds=1&ft=eXd.6HF2Myq8ZKzkTwe2NT2oyl7Gb&mime_type=video_mp4&qs=0&rc=OjY1NGk6aGloOzdoZ2lnZUBpamZ0Mzk6Zm01OzMzNzczM0AyLV9iMF8zNmExXy8tLi81YSNfYy5pcjRnZG1gLS1kMTZzcw%3D%3D&l=202205251952170102231000260E4D00D5" />
               <div class="ml-5 d-flex flex-column">
                 <v-btn elevation="0" icon class="mb-4 bg-grey-lighten-3">
                   <v-icon icon="mdi-heart" />
@@ -41,7 +47,3 @@
     </v-card>
   </v-container>
 </template>
-
-<script setup>
-
-</script>
