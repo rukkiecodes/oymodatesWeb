@@ -28,17 +28,17 @@ const height = 500
             </v-list-item>
 
             <v-card class="d-flex justify-start align-end video-container" :max-height="height" flat>
-              <video class="reels-video" :height="height"
-                style="border-radius: 12px; max-height: 500px; max-width: 500px;" src="../assets/1.mp4" />
+              <video class="reels-video" style="border-radius: 12px; max-height: 500px; max-width: 500px;"
+                src="../assets/2.webm" />
               <div class="ml-5 d-flex flex-column">
-                <v-btn elevation="0" icon class="mb-4 bg-grey-lighten-3">
-                  <v-icon icon="mdi-heart" />
+                <v-btn elevation="0" icon size="small" class="mb-4 bg-grey-lighten-4">
+                  <v-icon size="small" icon="mdi-heart" />
                 </v-btn>
-                <v-btn elevation="0" icon class="mb-4 bg-grey-lighten-3">
-                  <v-icon icon="mdi-comment-text-outline" />
+                <v-btn elevation="0" icon size="small" class="mb-4 bg-grey-lighten-4">
+                  <v-icon size="small" icon="mdi-comment-text-outline" />
                 </v-btn>
-                <v-btn elevation="0" icon class="bg-grey-lighten-3">
-                  <v-icon icon="mdi-share" />
+                <v-btn elevation="0" icon size="small" class="bg-grey-lighten-4">
+                  <v-icon size="small" icon="mdi-share" />
                 </v-btn>
               </div>
             </v-card>

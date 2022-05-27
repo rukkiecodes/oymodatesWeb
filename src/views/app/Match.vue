@@ -16,7 +16,7 @@ export default {
   },
 
   computed: {
-    ...mapState(MatchStore, ["users"])
+    ...mapState(MatchStore, ["renderUsers"])
   }
 }
 </script>
@@ -26,7 +26,8 @@ export default {
     <v-row align="start" justify="start">
       <v-col cols="12" sm="12" md="4" lg="4" xl="4" class="d-flex flex-column">
         <v-list nav dense>
-          <v-list-item v-for="(user, i) in users[1]" :key="i" active-color="primary" @click="viewUser(user)" lines="2">
+          <v-list-item v-for="(user, i) in renderUsers[1]" :key="i" :active="renderUsers.indexOf(userInfo)"
+            active-color="#ff4040" @click="viewUser(user)" lines="2" class="rounded-lg">
             <v-list-item-avatar start>
               <v-img :src="user?.photoURL" class="rounded-circle" style="cursor: pointer;" v-ripple width="50" />
             </v-list-item-avatar>
