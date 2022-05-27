@@ -1,9 +1,7 @@
 <script setup>
-import { MatchStore } from '../stores/match'
+import { useSigninStore } from '../stores/auth'
 
-const match = MatchStore()
-
-match.getUsers()
+const auth = useSigninStore()
 
 const height = 500
 </script>
@@ -15,8 +13,7 @@ const height = 500
         <v-row align="start" justify="space-between">
           <v-col cols="1" sm="1" md="1" lg="1" xl="1">
             <v-avatar size="large">
-              <v-img
-                src="https://p16-sign-va.tiktokcdn.com/tos-maliva-avt-0068/8db34985871517d38c7ef045e63c9524~c5_100x100.jpeg?x-expires=1653613200&x-signature=LtIRIcCxBF4A6Bro9wXLJZxXjSI%3D" />
+              <v-img :src="auth?.user?.photoURL" />
             </v-avatar>
           </v-col>
           <v-col cols="11" sm="11" md="11" lg="11" xl="11" class="mt-n1 pt-0">

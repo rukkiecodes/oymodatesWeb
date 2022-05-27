@@ -1,9 +1,13 @@
 <script setup>
 import { useSigninStore } from '../stores/auth'
+import { MatchStore } from '../stores/match'
 import { HeartIcon, PlusCircleIcon, UserIcon, CogIcon, LogoutIcon } from '@heroicons/vue/outline'
 import AuthDialogVue from './AuthDialog.vue'
 
+const match = MatchStore()
 const auth = useSigninStore()
+
+match.getUsers()
 </script>
 
 <template>
@@ -30,7 +34,7 @@ const auth = useSigninStore()
       <v-menu v-else open-on-hover anchor="start" transition="scale-transition">
         <template v-slot:activator="{ props }">
           <v-avatar v-bind="props" class="ml-md-4" size="small">
-            <v-img :src="auth.userProfile?.photoURL ? auth.userProfile.photoURL : auth.user?.photoURL" />
+            <v-img :src="auth.userProfile ? auth.userProfile?.photoURL : auth.user?.photoURL" />
           </v-avatar>
         </template>
 

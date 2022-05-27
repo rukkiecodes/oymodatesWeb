@@ -46,16 +46,9 @@ export const useSigninStore = defineStore({
           const user = result.user
 
           VueCookies.set('oymoUser', JSON.stringify(user))
-          console.log('oymoUser: ', VueCookies.get('oymoUser'))
           this.googleLoading = false
           this.userSetup()
-        }).catch(error => {
-          this.googleLoading = false
-          const errorCode = error.code
-          const errorMessage = error.message
-          const email = error.customData.email
-          const credential = GoogleAuthProvider.credentialFromError(error)
-        })
+        }).catch(error => this.googleLoading = false)
     },
 
     facebookLogin () {
@@ -71,12 +64,7 @@ export const useSigninStore = defineStore({
           this.facebookLoading = false
           this.userSetup()
         })
-        .catch(error => {
-          const errorCode = error.code
-          const errorMessage = error.message
-          const email = error.customData.email
-          const credential = FacebookAuthProvider.credentialFromError(error)
-        })
+        .catch(error => this.facebookLoading = false)
     },
 
     signinUser () {
@@ -113,11 +101,8 @@ export const useSigninStore = defineStore({
     async updateProfile () {
       const user = await VueCookies.get('oymoUser')
 
-      if (navigator.geolocation)
-        navigator.geolocation.getCurrentPosition(position => this.userProfileCredential.location = JSON.stringify(position))
-
-      if (this.userProfile?.id || this.userProfile != null) {
-        if (this.usernames.includes(this.userProfileCredential.username))
+      if (this.userProfile != null) {
+        if (this.usernames?.includes(this.userProfileCredential?.username))
           updateDoc(doc(db, 'users', user.uid), {
             job: this.userProfileCredential.job,
             company: this.userProfileCredential.company,
@@ -136,7 +121,7 @@ export const useSigninStore = defineStore({
             city: this.userProfileCredential.city,
             gender: this.userProfileCredential.gender,
           }).then(() => {
-            if (this.userProfileCredential.username != this.userProfile.username)
+            if (this.userProfileCredential?.username != this.userProfile?.username)
               router.push(`/@${this.userProfileCredential?.username}`)
           }).finally(() => {
             this.getUsernames()
@@ -147,6 +132,7 @@ export const useSigninStore = defineStore({
         setDoc(doc(db, 'users', user.uid), {
           id: user.uid,
           displayName: user.displayName,
+          photoURL: this.userProfile?.photoURL ? this.updateProfile?.photoURL : user.photoURL,
           job: this.userProfileCredential.job,
           company: this.userProfileCredential.company,
           username: this.userProfileCredential.username,
@@ -178,8 +164,10 @@ export const useSigninStore = defineStore({
 
         const storage = getStorage()
 
-        const pictureRef = ref(storage, `avatars/${user.uid}/${file.name}`)
-        const desertRef = ref(storage, this.userProfile.avatarLink)
+        let link = `avatars/${user.uid}/${file.name}`
+
+        const pictureRef = ref(storage, link)
+        const desertRef = ref(storage, this.userProfile?.avatarLink)
         const uploadTask = uploadBytesResumable(pictureRef, file)
 
         uploadTask.on('state_changed',
@@ -193,19 +181,19 @@ export const useSigninStore = defineStore({
           () => {
             getDownloadURL(uploadTask.snapshot.ref)
               .then(downloadURL => {
-                if (!this.userProfile.photoURL)
+                if (!this.userProfile?.avatarLink)
                   updateDoc(doc(db, 'users', user.uid), {
                     photoURL: downloadURL,
-                    avatarLink: uploadTask.snapshot.ref._location.path
+                    avatarLink: link
                   }).finally(() => {
                     this.getUserProfile()
                     this.pictureUploadProgress = 0
                   })
-                else
+                else if (this.userProfile?.avatarLink)
                   deleteObject(desertRef).then(() => {
                     updateDoc(doc(db, 'users', user.uid), {
                       photoURL: downloadURL,
-                      avatarLink: uploadTask.snapshot.ref._location.path
+                      avatarLink: link
                     }).finally(() => {
                       this.getUserProfile()
                       this.pictureUploadProgress = 0

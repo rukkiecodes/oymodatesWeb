@@ -18,6 +18,14 @@ const router = createRouter({
       }
     },
     {
+      path: '/newMatch',
+      name: 'newMatch',
+      component: () => import('../views/app/NewMatch.vue'),
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
       path: '/match',
       name: 'match',
       component: () => import('../views/app/Match.vue'),

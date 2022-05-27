@@ -43,7 +43,7 @@ auth.getUsernames()
             <v-text-field v-model="auth.userProfileCredential.username" @keypress.enter="auth.updateProfile"
               class="bg-grey-lighten-4 rounded-lg px-4" variant="plain" density="compact" placeholder="Username"
               hide-details />
-            <p v-if="auth.usernames.includes(auth.userProfileCredential.username) && auth.userProfile.username != auth.userProfileCredential.username"
+            <p v-if="auth.usernames?.includes(auth.userProfileCredential?.username) && auth.userProfile?.username != auth.userProfileCredential?.username"
               class="text-caption text-red">Sorry this username is taken</p>
             <p class="text-grey-darken-2 mt-5 mb-0 pb-0 text-caption">www.oymodates.com/@{{
                 auth.userProfile?.username ?
