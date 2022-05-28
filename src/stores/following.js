@@ -1,4 +1,6 @@
+import { collection, getDocs } from "firebase/firestore"
 import { defineStore } from "pinia"
+import { db } from "../service/firebase"
 
 import { getFollowingById, updateFollowing } from "../service/following"
 
@@ -8,9 +10,10 @@ export const followingStore = defineStore({
   state: () => ({
     followState: false,
     currentFollowingState: {
-      state: false,
-      counter: 0
-    }
+      state: false
+    },
+
+    followers: []
   }),
 
   actions: {
@@ -20,18 +23,24 @@ export const followingStore = defineStore({
           this.followState = res
           this.currentFollowingState = this.currentFollowingState
           this.currentFollowingState.state = res
-          console.log(this.currentFollowingState.state)
-          console.log(this.followState)
         })
     },
 
     handleUpdateLike (user, currentUser) {
-      // this.currentFollowingState.counter = this.currentFollowingState.state ? -1 : 1
-
       updateFollowing(user.id, currentUser, this.currentFollowingState.state)
       this.getFollowing(user, currentUser)
+      this.followers = []
+      this.getAllFollowing(user)
       console.log('refetch following')
-      this.followState = !this.followState
+    },
+
+    async getAllFollowing (user) {
+      const querySnapshot = await getDocs(collection(db, 'users', user.id, 'following'))
+
+      querySnapshot.forEach(doc => {
+        this.followers = []
+        this.followers.push(doc.data())
+      })
     }
   }
 })

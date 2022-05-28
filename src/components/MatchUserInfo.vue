@@ -7,17 +7,18 @@ import { mapActions, mapState } from 'pinia'
 export default {
   mounted () {
     this.getFollowing(this.userInfo, this.userProfile)
-    console.log('followState: ', this.followState)
+
+    this.getAllFollowing(this.userInfo)
   },
 
   methods: {
     ...mapActions(MatchStore, ["swipeRight"]),
-    ...mapActions(followingStore, ["getFollowing", "handleUpdateLike"])
+    ...mapActions(followingStore, ["getFollowing", "handleUpdateLike", "getAllFollowing"])
   },
 
   computed: {
     ...mapState(MatchStore, ["userInfo"]),
-    ...mapState(followingStore, ["followState"]),
+    ...mapState(followingStore, ["followState", "followers"]),
     ...mapState(useSigninStore, ["userProfile"])
   }
 }
@@ -36,13 +37,11 @@ export default {
             <span class="text-h4 text font-weight-bold">{{ userInfo.username }}</span>
             <span class="text text-body-1 mt-1">{{ userInfo.displayName }}</span>
             <div class="d-flex">
-              <v-btn v-if="followState == false" @click="handleUpdateLike(userInfo, userProfile)" rounded="lg" variant="outlined"
-                class="text-capitalize mt-3" width="100" color="#ff4040">
-                Follow
-              </v-btn>
-              <v-btn v-if="followState == true" @click="handleUpdateLike(userInfo, userProfile)" rounded="lg" variant="outlined"
-                class="text-capitalize mt-3" width="100" color="#ff4040">
-                Unfollow
+              <v-btn @click="handleUpdateLike(userInfo, userProfile)" rounded="lg"
+                variant="outlined" class="text-capitalize mt-3" width="100" color="#ff4040">
+                {{
+                  followState == false ? 'Follow' : 'Unfollow'
+                }}
               </v-btn>
               <v-btn rounded="lg" @click="swipeRight(userInfo, userProfile)" elevation="0"
                 class="text-capitalize mt-3 text-white ml-4" width="100" color="#ff4040">
@@ -53,5 +52,9 @@ export default {
         </v-col>
       </v-row>
     </v-col>
+    <div class="d-flex">
+      <span class="text-grey-darken-4 font-weight-bold text-body-1">{{ followers.length }} <span class="text-body-2 text-grey-darken-3">{{ followers.length == 1 ? 'Follower' : 'Followers' }}</span></span>
+      <span class="text-grey-darken-4 font-weight-bold text-body-1 ml-5">10 <span class="text-body-2 text-grey-darken-3">Likes</span></span>
+    </div>
   </v-row>
 </template>
