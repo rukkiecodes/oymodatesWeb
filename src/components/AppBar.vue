@@ -20,7 +20,7 @@ match.getUsers()
     <v-spacer />
 
     <div v-if="auth.auth">
-      <v-btn v-if="auth.user" class="text-capitalize mr-4" icon rounded="lg" size="x-small">
+      <v-btn v-if="auth.user" to="/upload" class="text-capitalize mr-4" icon rounded="lg" size="x-small">
         <PlusCircleIcon class="icon" />
       </v-btn>
       <v-btn v-if="auth.user" class="text-capitalize mr-4" icon rounded="lg" size="x-small">

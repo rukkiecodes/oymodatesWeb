@@ -18,7 +18,7 @@ export default {
 
   computed: {
     ...mapState(MatchStore, ["userInfo"]),
-    ...mapState(followingStore, ["followState", "followers"]),
+    ...mapState(followingStore, ["followState", "followers", "disableFollow"]),
     ...mapState(useSigninStore, ["userProfile"])
   }
 }
@@ -37,15 +37,19 @@ export default {
             <span class="text-h4 text font-weight-bold">{{ userInfo.username }}</span>
             <span class="text text-body-1 mt-1">{{ userInfo.displayName }}</span>
             <div class="d-flex">
-              <v-btn @click="handleUpdateLike(userInfo, userProfile)" rounded="lg"
-                variant="outlined" class="text-capitalize mt-3" width="100" color="#ff4040">
+              <v-btn @click="handleUpdateLike(userInfo, userProfile)" :disabled="disableFollow" rounded="lg" variant="outlined"
+                class="text-capitalize mt-3" width="100" color="#ff4040">
                 {{
-                  followState == false ? 'Follow' : 'Unfollow'
+                    !followState ? 'Follow' : 'Unfollow'
                 }}
               </v-btn>
+
               <v-btn rounded="lg" @click="swipeRight(userInfo, userProfile)" elevation="0"
                 class="text-capitalize mt-3 text-white ml-4" width="100" color="#ff4040">
                 Match
+                <v-tooltip activator="parent" location="bottom">
+                  This user will be removed from this list after match
+                </v-tooltip>
               </v-btn>
             </div>
           </div>
@@ -53,8 +57,10 @@ export default {
       </v-row>
     </v-col>
     <div class="d-flex">
-      <span class="text-grey-darken-4 font-weight-bold text-body-1">{{ followers.length }} <span class="text-body-2 text-grey-darken-3">{{ followers.length == 1 ? 'Follower' : 'Followers' }}</span></span>
-      <span class="text-grey-darken-4 font-weight-bold text-body-1 ml-5">10 <span class="text-body-2 text-grey-darken-3">Likes</span></span>
+      <span class="text-grey-darken-4 font-weight-bold text-body-1">{{ followers.length }} <span
+          class="text-body-2 text-grey-darken-3">{{ followers.length == 1 ? 'Follower' : 'Followers' }}</span></span>
+      <span class="text-grey-darken-4 font-weight-bold text-body-1 ml-5">10 <span
+          class="text-body-2 text-grey-darken-3">Likes</span></span>
     </div>
   </v-row>
 </template>

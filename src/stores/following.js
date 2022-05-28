@@ -12,8 +12,8 @@ export const followingStore = defineStore({
     currentFollowingState: {
       state: false
     },
-
-    followers: []
+    followers: [],
+    disableFollow: false
   }),
 
   actions: {
@@ -27,11 +27,13 @@ export const followingStore = defineStore({
     },
 
     handleUpdateLike (user, currentUser) {
+      this.disableFollow = true
       updateFollowing(user.id, currentUser, this.currentFollowingState.state)
       this.getFollowing(user, currentUser)
       this.followers = []
       this.getAllFollowing(user)
       console.log('refetch following')
+      this.disableFollow = false
     },
 
     async getAllFollowing (user) {

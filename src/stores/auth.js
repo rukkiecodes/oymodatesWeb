@@ -153,6 +153,7 @@ export const useSigninStore = defineStore({
       const user = await VueCookies.get('oymoUser')
       const input = document.createElement('input')
       input.setAttribute('type', 'file')
+      input.setAttribute('accept', 'image/*')
       input.click()
 
       input.addEventListener('change', e => {

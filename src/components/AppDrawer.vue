@@ -24,7 +24,7 @@ const following = [
   <v-navigation-drawer width="300" permanent :border="0">
     <v-list nav dense width="100%">
       <v-list-item active-color="#ff4040" rounded="lg" to="/">
-        <HomeIcon class="mr-3 icon" />
+        <home-icon class="mr-3 icon" />
 
         <v-list-item-title class="text">For you</v-list-item-title>
       </v-list-item>
