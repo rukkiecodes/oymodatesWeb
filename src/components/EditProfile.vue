@@ -10,7 +10,7 @@ auth.getUsernames()
 <template>
   <v-btn @click="auth.toggleEditProfileDialog" variant="outlined" class="text-capitalize mt-3" width="140"
     color="grey-darken-3">
-    <PencilAltIcon style="width: 24px;" />
+    <PencilAltIcon class="icon" />
     Edit profile
   </v-btn>
   <v-dialog v-model="auth.editProfileDialog" persistent scrollable>
@@ -20,7 +20,7 @@ auth.getUsernames()
 
         <v-spacer />
         <v-btn @click="auth.toggleEditProfileDialog" icon elevation="0">
-          <XIcon style="width: 24px;" />
+          <XIcon class="icon" />
         </v-btn>
       </v-card-title>
 

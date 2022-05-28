@@ -21,13 +21,13 @@ match.getUsers()
 
     <div v-if="auth.auth">
       <v-btn v-if="auth.user" class="text-capitalize mr-4" icon rounded="lg" size="x-small">
-        <PlusCircleIcon style="width: 24px;" />
+        <PlusCircleIcon class="icon" />
       </v-btn>
       <v-btn v-if="auth.user" class="text-capitalize mr-4" icon rounded="lg" size="x-small">
         <v-icon>mdi-telegram</v-icon>
       </v-btn>
       <v-btn v-if="auth.user" class="text-capitalize mr-4" icon rounded="lg" size="x-small">
-        <HeartIcon style="width: 24px;" />
+        <HeartIcon class="icon" />
       </v-btn>
       <AuthDialogVue v-if="!auth.user" />
 

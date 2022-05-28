@@ -84,14 +84,13 @@ export const useSigninStore = defineStore({
     async userSetup () {
       const user = await VueCookies.get('oymoUser')
 
-      const unsub = onSnapshot(doc(db, 'users', user.uid),
+      onSnapshot(doc(db, 'users', user.uid),
         snapshot => {
           if (!snapshot.exists()) {
             router.push(this.userProfile?.username ? `/@${this.userProfile?.username}` : `/@${user?.displayName}`)
             setTimeout(() => this.editProfileDialog = true, 1000)
           }
         })
-      return unsub
     },
 
     toggleEditProfileDialog () {
@@ -146,9 +145,8 @@ export const useSigninStore = defineStore({
     },
 
     async getUsernames () {
-      const unsub = onSnapshot(collection(db, 'users'),
+      onSnapshot(collection(db, 'users'),
         querySnapshot => querySnapshot.forEach(doc => this.usernames.push(doc?.data()?.username)))
-      return unsub
     },
 
     async updateProfilePicture () {
@@ -213,6 +211,8 @@ export const useSigninStore = defineStore({
         this.userProfileCredential = { ...profile }
         this.auth = true
       } else this.auth = true
+
+      this.userSetup()
     }
   }
 })

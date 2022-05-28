@@ -36,20 +36,18 @@ export const MatchStore = defineStore({
 
       const swipedUserId = (await swipes).length > 0 ? swipes : ['test']
 
-      unsub =
-        onSnapshot(query(collection(db, 'users'),
-          where('id', 'not-in', [...passedUserId, ...swipedUserId])
-        ),
-          snapshot => {
-            this.users.push(
-              snapshot.docs.filter(doc => doc.id !== user.uid)
-                .map(doc => ({
-                  id: doc.id,
-                  ...doc.data()
-                }))
-            )
-          })
-      return unsub
+      onSnapshot(query(collection(db, 'users'),
+        where('id', 'not-in', [...passedUserId, ...swipedUserId])
+      ),
+        snapshot => {
+          this.users.push(
+            snapshot.docs.filter(doc => doc.id !== user.uid)
+              .map(doc => ({
+                id: doc.id,
+                ...doc.data()
+              }))
+          )
+        })
     },
 
     async remount () {

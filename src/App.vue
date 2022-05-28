@@ -5,7 +5,7 @@ import ChatDrawer from './components/ChatDrawer.vue'
 import { useSigninStore } from './stores/auth'
 
 const auth = useSigninStore()
-auth.userSetup()
+// auth.userSetup()
 auth.signinUser()
 auth.getUserProfile()
 </script>

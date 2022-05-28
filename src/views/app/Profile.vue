@@ -25,7 +25,7 @@ const auth = useSigninStore()
           </v-col>
           <v-col>
             <v-btn icon elevation="0">
-              <ShareIcon style="width: 24px;" />
+              <ShareIcon class="icon" />
             </v-btn>
           </v-col>
         </v-row>

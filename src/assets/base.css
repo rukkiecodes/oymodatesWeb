@@ -108,3 +108,7 @@ body {
 .red-bg {
   background-color: #ff4040;
 }
+
+.icon {
+  width: 24px;
+}

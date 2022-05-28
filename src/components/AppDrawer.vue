@@ -24,19 +24,19 @@ const following = [
   <v-navigation-drawer width="300" permanent :border="0">
     <v-list nav dense width="100%">
       <v-list-item active-color="#ff4040" rounded="lg" to="/">
-        <HomeIcon style="width: 24px;" class="mr-3" />
+        <HomeIcon class="mr-3 icon" />
 
         <v-list-item-title class="text">For you</v-list-item-title>
       </v-list-item>
 
       <v-list-item active-color="#ff4040" rounded="lg" to="/match">
-        <HeartIcon style="width: 24px;" class="mr-3" />
+        <HeartIcon class="mr-3 icon" />
 
         <v-list-item-title class="text">Match</v-list-item-title>
       </v-list-item>
 
       <v-list-item active-color="#ff4040" rounded="lg" to="/following">
-        <UsersIcon style="width: 24px;" class="mr-3" />
+        <UsersIcon class="mr-3 icon" />
 
         <v-list-item-title class="text">Following</v-list-item-title>
       </v-list-item>

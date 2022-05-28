@@ -1,14 +1,23 @@
 <script>
 import { MatchStore } from '../stores/match'
 import { useSigninStore } from '../stores/auth'
+import { followingStore } from '../stores/following'
+
 import { mapActions, mapState } from 'pinia'
 export default {
+  mounted () {
+    this.getFollowing(this.userInfo, this.userProfile)
+    console.log('followState: ', this.followState)
+  },
+
   methods: {
-    ...mapActions(MatchStore, ["swipeRight"])
+    ...mapActions(MatchStore, ["swipeRight"]),
+    ...mapActions(followingStore, ["getFollowing", "handleUpdateLike"])
   },
 
   computed: {
     ...mapState(MatchStore, ["userInfo"]),
+    ...mapState(followingStore, ["followState"]),
     ...mapState(useSigninStore, ["userProfile"])
   }
 }
@@ -27,8 +36,13 @@ export default {
             <span class="text-h4 text font-weight-bold">{{ userInfo.username }}</span>
             <span class="text text-body-1 mt-1">{{ userInfo.displayName }}</span>
             <div class="d-flex">
-              <v-btn rounded="lg" variant="outlined" class="text-capitalize mt-3" width="100" color="#ff4040">
+              <v-btn v-if="followState == false" @click="handleUpdateLike(userInfo, userProfile)" rounded="lg" variant="outlined"
+                class="text-capitalize mt-3" width="100" color="#ff4040">
                 Follow
+              </v-btn>
+              <v-btn v-if="followState == true" @click="handleUpdateLike(userInfo, userProfile)" rounded="lg" variant="outlined"
+                class="text-capitalize mt-3" width="100" color="#ff4040">
+                Unfollow
               </v-btn>
               <v-btn rounded="lg" @click="swipeRight(userInfo, userProfile)" elevation="0"
                 class="text-capitalize mt-3 text-white ml-4" width="100" color="#ff4040">
