@@ -6,11 +6,10 @@ import vuetify from './plugins/vuetify'
 import { loadFonts } from './plugins/webfontloader'
 
 import { OhVueIcon, addIcons } from 'oh-vue-icons'
-import { CoHome, BiHeart } from 'oh-vue-icons/icons'
+import { CoHome } from 'oh-vue-icons/icons'
 
 addIcons(
-  CoHome,
-  BiHeart
+  CoHome
 )
 
 loadFonts()
@@ -18,7 +17,6 @@ loadFonts()
 const app = createApp(App)
 
 app.component('home-icon', OhVueIcon)
-app.component('match-icon', BiHeart)
 app.use(router)
 app.use(vuetify)
 app.use(createPinia())

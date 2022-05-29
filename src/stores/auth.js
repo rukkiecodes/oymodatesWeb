@@ -1,17 +1,18 @@
 import { defineStore } from 'pinia'
 
-import { getAuth, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider, onAuthStateChanged, signOut } from "firebase/auth"
 
 const googleProvider = new GoogleAuthProvider()
 const facebookProvider = new FacebookAuthProvider()
 
-import { auth, db } from '../service/firebase'
 
 import VueCookies from 'vue-cookies'
 
 import router from '../router'
+
+import { signInWithPopup, GoogleAuthProvider, FacebookAuthProvider, onAuthStateChanged, signOut } from "firebase/auth"
 import { collection, doc, getDoc, onSnapshot, serverTimestamp, setDoc, updateDoc } from 'firebase/firestore'
 import { deleteObject, getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage"
+import { auth, db } from '../service/firebase'
 
 export const useSigninStore = defineStore({
   id: 'auth',
