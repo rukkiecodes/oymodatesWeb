@@ -209,6 +209,7 @@ export const useSigninStore = defineStore({
       let profile = await (await getDoc(doc(db, 'users', user?.uid))).data()
 
       if (profile) {
+        this.userProfile = null
         this.userProfile = { ...profile }
         this.userProfileCredential = { ...profile }
         this.auth = true

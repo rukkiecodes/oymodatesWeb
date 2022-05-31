@@ -2,6 +2,7 @@
 import { MatchStore } from '../stores/match'
 import { useSigninStore } from '../stores/auth'
 import { followingStore } from '../stores/following'
+import { postStore } from '../stores/posts'
 
 import { mapActions, mapState } from 'pinia'
 export default {
@@ -9,17 +10,20 @@ export default {
     this.getFollowing(this.userInfo, this.userProfile)
 
     this.getAllFollowing(this.userInfo)
+    this.getUserPosts(this.userInfo)
   },
 
   methods: {
     ...mapActions(MatchStore, ["swipeRight"]),
-    ...mapActions(followingStore, ["getFollowing", "handleUpdateLike", "getAllFollowing"])
+    ...mapActions(followingStore, ["getFollowing", "handleUpdateLike", "getAllFollowing"]),
+    ...mapActions(postStore, ["getUserPosts"])
   },
 
   computed: {
     ...mapState(MatchStore, ["userInfo"]),
     ...mapState(followingStore, ["followState", "followers", "disableFollow"]),
-    ...mapState(useSigninStore, ["userProfile"])
+    ...mapState(useSigninStore, ["userProfile"]),
+    ...mapState(postStore, ["userPosts"])
   }
 }
 </script>
@@ -56,6 +60,7 @@ export default {
         </v-col>
       </v-row>
     </v-col>
+
     <v-col cols="12">
       <div class="d-flex">
         <span class="text-grey-darken-4 font-weight-bold text-body-1">{{ followers.length }} <span
@@ -65,4 +70,29 @@ export default {
       </div>
     </v-col>
   </v-row>
+
+  <div align="start" justify="start" class="reel_cards mt-5">
+    <div cols="12" sm="6" md="4" v-for="(feed, i) in userPosts[0]" :key="i" class="reel_cards_card pa-0 px-1">
+      <video class="reels-video ma-0" :src="feed?.media" />
+    </div>
+  </div>
 </template>
+
+<style scoped>
+video {
+  border-radius: 10px;
+  max-width: 100%;
+}
+
+.reel_cards {
+  width: 100%;
+  height: 100%;
+  column-count: 3;
+  column-gap: 0;
+}
+
+.reel_cards_card {
+  width: 100%;
+  break-inside: avoid;
+}
+</style>

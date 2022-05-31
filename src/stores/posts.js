@@ -7,14 +7,47 @@ export const postStore = defineStore({
   id: 'posts',
 
   state: () => ({
-    posts: []
+    posts: [],
+    myPosts: [],
+    userPosts: []
   }),
 
   actions: {
     async getPosts () {
-      const querySnapshot = await getDocs(collection(db, 'reels'), orderBy('timestamp', 'desc'))
+      this.posts = []
+
+      const post = await getDocs(collection(db, 'reels'), orderBy('timestamp', 'desc'))
+
       this.posts.push(
-        querySnapshot.docs?.map(doc => ({
+        post.docs?.map(doc => ({
+          id: doc?.id,
+          ...doc?.data()
+        }))
+      )
+    },
+
+    async getMyPosts (user) {
+      this.myPosts = []
+
+      const post = await getDocs(query(collection(db, 'reels'),
+        where('user.id', '==', user.id, orderBy('timestamp', 'desc'))))
+
+      this.myPosts.push(
+        post.docs?.map(doc => ({
+          id: doc?.id,
+          ...doc?.data()
+        }))
+      )
+    },
+
+    async getUserPosts (user) {
+      this.userPosts = []
+
+      const post = await getDocs(query(collection(db, 'reels'),
+        where('user.id', '==', user.id, orderBy('timestamp', 'desc'))))
+
+      this.userPosts.push(
+        post.docs?.map(doc => ({
           id: doc?.id,
           ...doc?.data()
         }))
