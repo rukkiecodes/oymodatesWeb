@@ -18,6 +18,9 @@ const upload = uploadStore()
               <UploadIcon style="width: 40px" />
             </v-progress-circular>
           </v-card-text>
+          <v-card-text v-if="upload.videoUploadProgress" class="text-center py-0 text-caption">
+            Upload is {{ upload.videoUploadProgress }}% done
+          </v-card-text>
           <v-card-text class="text-center">
             Select video to upload
           </v-card-text>

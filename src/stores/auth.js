@@ -206,7 +206,7 @@ export const useSigninStore = defineStore({
 
     async getUserProfile () {
       const user = await VueCookies.get('oymoUser')
-      let profile = await (await getDoc(doc(db, 'users', user.uid))).data()
+      let profile = await (await getDoc(doc(db, 'users', user?.uid))).data()
 
       if (profile) {
         this.userProfile = { ...profile }

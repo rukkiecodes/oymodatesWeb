@@ -10,7 +10,8 @@ const auth = useSigninStore()
   <v-container>
     <v-row align="start" justify="start">
       <v-col cols="12" sm="12" md="3" lg="3">
-        <v-img class="rounded-circle" :src="auth.userProfile?.photoURL ? auth.userProfile.photoURL : auth.user?.photoURL" />
+        <v-img class="rounded-circle"
+          :src="auth.userProfile?.photoURL ? auth.userProfile.photoURL : auth.user?.photoURL" />
       </v-col>
       <v-col cols="12" sm="12" md="9" lg="9" class="d-flex">
         <v-row align="start" justify="start">
@@ -20,7 +21,15 @@ const auth = useSigninStore()
                   'username'
               }}</span>
               <span class="text text-body-1 mt-1">{{ auth.user?.displayName }}</span>
-              <EditProfile />
+              <div class="d-flex align-center mt-3">
+                <EditProfile />
+                <span class="text-grey-darken-4 font-weight-bold text-body-1 ml-4">{{ auth.userProfile.followersCount }}
+                  <span class="text-body-2 text-grey-darken-3">{{ auth.userProfile.followersCount == 1 ? 'Follower' :
+                      'Followers'
+                  }}</span></span>
+                <span class="text-grey-darken-4 font-weight-bold text-body-1 ml-4">10 <span
+                    class="text-body-2 text-grey-darken-3">Likes</span></span>
+              </div>
             </div>
           </v-col>
           <v-col>

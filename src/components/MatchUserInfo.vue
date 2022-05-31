@@ -37,8 +37,8 @@ export default {
             <span class="text-h4 text font-weight-bold">{{ userInfo.username }}</span>
             <span class="text text-body-1 mt-1">{{ userInfo.displayName }}</span>
             <div class="d-flex">
-              <v-btn @click="handleUpdateLike(userInfo, userProfile)" :disabled="disableFollow" rounded="lg" variant="outlined"
-                class="text-capitalize mt-3" width="100" color="#ff4040">
+              <v-btn @click="handleUpdateLike(userInfo, userProfile)" :disabled="disableFollow" rounded="lg"
+                variant="outlined" class="text-capitalize mt-3" width="100" color="#ff4040">
                 {{
                     !followState ? 'Follow' : 'Unfollow'
                 }}
@@ -56,11 +56,13 @@ export default {
         </v-col>
       </v-row>
     </v-col>
-    <div class="d-flex">
-      <span class="text-grey-darken-4 font-weight-bold text-body-1">{{ followers.length }} <span
-          class="text-body-2 text-grey-darken-3">{{ followers.length == 1 ? 'Follower' : 'Followers' }}</span></span>
-      <span class="text-grey-darken-4 font-weight-bold text-body-1 ml-5">10 <span
-          class="text-body-2 text-grey-darken-3">Likes</span></span>
-    </div>
+    <v-col cols="12">
+      <div class="d-flex">
+        <span class="text-grey-darken-4 font-weight-bold text-body-1">{{ followers.length }} <span
+            class="text-body-2 text-grey-darken-3">{{ followers.length == 1 ? 'Follower' : 'Followers' }}</span></span>
+        <span class="text-grey-darken-4 font-weight-bold text-body-1 ml-5">10 <span
+            class="text-body-2 text-grey-darken-3">Likes</span></span>
+      </div>
+    </v-col>
   </v-row>
 </template>

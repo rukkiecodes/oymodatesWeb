@@ -8,7 +8,7 @@ auth.getUsernames()
 </script>
 
 <template>
-  <v-btn @click="auth.toggleEditProfileDialog" variant="outlined" class="text-capitalize mt-3" width="140"
+  <v-btn @click="auth.toggleEditProfileDialog" variant="outlined" class="text-capitalize" width="140"
     color="grey-darken-3">
     <PencilAltIcon class="icon" />
     Edit profile
